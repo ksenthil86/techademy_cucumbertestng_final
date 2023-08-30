@@ -1,13 +1,23 @@
 package com.techademy.virtusa.cucumbertestng;
 
+import static org.testng.Assert.assertThrows;
+
 import java.time.Duration;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 
 public class StepDefinitions {
 	
@@ -29,5 +39,52 @@ public class StepDefinitions {
 	public void logintowebsite(String url) {
 		driver.get(url);
 	}
+	
+	@When("I Validate Ajax Loader link")
+	public void verifyAjaxlink() {
+		if(driver.findElements(By.xpath("//a[@id='ajax-loader']")).size()==1) {
+			System.out.println("Ajax Loader link present");
+		}else {
+			Assert.fail("Ajax Loader link not present");
+		}
+	}
+	
+	@And("I click Ajax Loader link")
+	public void clicAjaxlink() {
+		driver.findElement(By.xpath("//a[@id='ajax-loader']")).click();
+		
+		String originalWindow = driver.getWindowHandle();
+		for (String windowHandle : driver.getWindowHandles()) {
+		    if(!originalWindow.contentEquals(windowHandle)) {
+		        driver.switchTo().window(windowHandle);
+		        break;
+		    }
+		}
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.titleIs("WebDriver | Ajax-Loader"));
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("button1"))));
+	}
+	
+	@And("I click Click Me link")
+	public void clicClickMelink() {
+		driver.findElement(By.id("button1")).click();
+	}
+	
+	@And("I click Click Me link")
+	public void verifypopupmessage() {
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+		if(alert!=null) {
+			System.out.println("Popup Message is displayed - "+alert.getText());
+		}else {
+			Assert.fail("Popup Message is not displayed");
+		}
+	}
+	
+    @After
+	public void teardown() {   
+           driver.quit();
+	}
+	
 
 }
