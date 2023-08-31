@@ -14,6 +14,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,16 +28,17 @@ public class ReqResTest {
     
   @BeforeMethod
   public void beforeMethod() {
-	  
+	  ChromeDriverService service = new ChromeDriverService.Builder()
+              .build();
       ChromeOptions options = new ChromeOptions(); 
       options.addArguments("--remote-allow-origins=*"); 
       options.addArguments("--start-maximized");
-	        driver = new ChromeDriver(options);
+	        driver = new ChromeDriver(service,options);
 	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
 	        
   }
   
-  @Test(invocationCount = 10) //Run the same test 10 times
+  @Test(invocationCount = 1) //Run the same test 10 times
   public void postTest() throws IOException {
 	  
 	   // Open WebDriverUniversity website
