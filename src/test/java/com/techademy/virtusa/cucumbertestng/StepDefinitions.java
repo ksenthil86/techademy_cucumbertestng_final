@@ -17,6 +17,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class StepDefinitions {
@@ -70,12 +71,12 @@ public class StepDefinitions {
 		driver.findElement(By.id("button1")).click();
 	}
 	
-	@And("I click Click Me link")
+	@Then("I validate pop up message")
 	public void verifypopupmessage() {
-		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
-		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-		if(alert!=null) {
-			System.out.println("Popup Message is displayed - "+alert.getText());
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//h4[@class='modal-title' and text()='Well Done For Waiting....!!!']"))));
+		if(driver.findElement(By.xpath("//h4[@class='modal-title' and text()='Well Done For Waiting....!!!']")).isDisplayed()) {
+			System.out.println("Popup Message is displayed");
 		}else {
 			Assert.fail("Popup Message is not displayed");
 		}
