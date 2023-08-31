@@ -2,24 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-09-01T02:16:27 IST" name="Suite" finished-at="2023-09-01T02:16:39 IST" duration-ms="11923">
+  <suite started-at="2023-09-01T02:27:42 IST" name="Default suite" finished-at="2023-09-01T02:27:53 IST" duration-ms="10743">
     <groups>
     </groups>
-    <test started-at="2023-09-01T02:16:27 IST" name="TestNGTest_10_Times" finished-at="2023-09-01T02:16:39 IST" duration-ms="11923">
+    <test started-at="2023-09-01T02:27:42 IST" name="Default test" finished-at="2023-09-01T02:27:53 IST" duration-ms="10743">
       <class name="testngtests.ReqResTest">
-        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:testngtests.ReqResTest@e350b40]" started-at="2023-09-01T02:16:27 IST" name="beforeMethod" finished-at="2023-09-01T02:16:30 IST" duration-ms="2732" status="PASS">
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:testngtests.ReqResTest@e350b40]" started-at="2023-09-01T02:27:42 IST" name="beforeMethod" finished-at="2023-09-01T02:27:44 IST" duration-ms="2251" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method signature="postTest()[pri:0, instance:testngtests.ReqResTest@e350b40]" started-at="2023-09-01T02:16:30 IST" name="postTest" finished-at="2023-09-01T02:16:39 IST" duration-ms="8949" status="PASS">
+        <test-method signature="postTest()[pri:0, instance:testngtests.ReqResTest@e350b40]" started-at="2023-09-01T02:27:44 IST" name="postTest" finished-at="2023-09-01T02:27:52 IST" duration-ms="8236" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- postTest -->
-        <test-method is-config="true" signature="afterMethod()[pri:0, instance:testngtests.ReqResTest@e350b40]" started-at="2023-09-01T02:16:39 IST" name="afterMethod" finished-at="2023-09-01T02:16:39 IST" duration-ms="188" status="PASS">
+        <test-method is-config="true" signature="afterMethod()[pri:0, instance:testngtests.ReqResTest@e350b40]" started-at="2023-09-01T02:27:52 IST" name="afterMethod" finished-at="2023-09-01T02:27:53 IST" duration-ms="204" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterMethod -->
       </class> <!-- testngtests.ReqResTest -->
-    </test> <!-- TestNGTest_10_Times -->
-  </suite> <!-- Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

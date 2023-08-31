@@ -28,12 +28,11 @@ public class ReqResTest {
     
   @BeforeMethod
   public void beforeMethod() {
-	  ChromeDriverService service = new ChromeDriverService.Builder()
-              .build();
+	  System.setProperty("webdriver.chrome.driver","C:\\WebDriver\\bin\\chromedriver.exe");
       ChromeOptions options = new ChromeOptions(); 
       options.addArguments("--remote-allow-origins=*"); 
       options.addArguments("--start-maximized");
-	        driver = new ChromeDriver(service,options);
+	        driver = new ChromeDriver(options);
 	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
 	        
   }
