@@ -1,59 +1,56 @@
-package com.techademy.virtusa.cucumbertestng;
+package testngtests;
 
-import static org.testng.Assert.assertThrows;
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
+import java.time.Instant;
 
-import org.openqa.selenium.Alert;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
-public class StepDefinitions {
+public class ReqResTest {
 	
     private static WebDriver driver;
     public final static int TIMEOUT = 10;
-	
-    @Before
-	public void setup() {   
-           
-        ChromeOptions options = new ChromeOptions(); 
-        options.addArguments("--remote-allow-origins=*"); 
-        options.addArguments("--start-maximized");
+    
+  @BeforeMethod
+  public void beforeMethod() {
+	  
+      ChromeOptions options = new ChromeOptions(); 
+      options.addArguments("--remote-allow-origins=*"); 
+      options.addArguments("--start-maximized");
 	        driver = new ChromeDriver(options);
 	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(TIMEOUT));
-	}
-	
-	
-	@Given("^I login to WebDriverUniversity website \"(.*)\"$")
-	public void logintowebsite(String url) {
-		driver.get(url);
-	}
-	
-	@When("I Validate Ajax Loader link")
-	public void verifyAjaxlink() {
+	        
+  }
+  
+  @Test(invocationCount = 10) //Run the same test 10 times
+  public void postTest() throws IOException {
+	  
+	   // Open WebDriverUniversity website
+	   driver.get("http://webdriveruniversity.com/index.html");
+	   
+	   //Check Ajax Loader link and click the link
 		if(driver.findElements(By.xpath("//a[@id='ajax-loader']")).size()==1) {
 			System.out.println("Ajax Loader link present");
 		}else {
 			Assert.fail("Ajax Loader link not present");
 		}
-	}
-	
-	@And("I click Ajax Loader link")
-	public void clicAjaxlink() {
 		driver.findElement(By.xpath("//a[@id='ajax-loader']")).click();
 		
+		//Go to the new tab
 		String originalWindow = driver.getWindowHandle();
 		for (String windowHandle : driver.getWindowHandles()) {
 		    if(!originalWindow.contentEquals(windowHandle)) {
@@ -64,28 +61,32 @@ public class StepDefinitions {
 		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.titleIs("WebDriver | Ajax-Loader"));
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("button1"))));
-	}
-	
-	@And("I click Click Me link")
-	public void clicClickMelink() {
+		
+		//Click 'Click Me' link
 		driver.findElement(By.id("button1")).click();
-	}
-	
-	@Then("I validate pop up message")
-	public void verifypopupmessage() {
-		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//h4[@class='modal-title' and text()='Well Done For Waiting....!!!']"))));
+		
+		//Check if the pop up message is displayed
 		if(driver.findElement(By.xpath("//h4[@class='modal-title' and text()='Well Done For Waiting....!!!']")).isDisplayed()) {
 			System.out.println("Popup Message is displayed");
 		}else {
 			Assert.fail("Popup Message is not displayed");
 		}
-	}
-	
-    @After
-	public void teardown() {   
-           driver.quit();
-	}
-	
+		
+		//Capture Screenshot
+		captureScreenshot();
+  }
+
+  @AfterMethod
+  public void afterMethod() {
+	  driver.quit();
+  }
+  
+  public void captureScreenshot() throws IOException {
+	  
+	  File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	  Long timestamp = Instant.now().getEpochSecond();
+	  FileUtils.copyFile(screenshot,new File("screenshots/screenshot-"+timestamp+".png"));
+  }
 
 }

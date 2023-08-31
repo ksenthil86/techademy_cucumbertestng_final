@@ -1,4 +1,4 @@
-package com.techademy.virtusa.cucumbertestng;
+package restassuredtests;
 
 
 import org.junit.runner.RunWith;
